@@ -8,7 +8,7 @@ import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = [ '/member/login', '/auth-redirect' ] // no redirect whitelist
+const whiteList = ['/member/login', '/auth-redirect'] // no redirect whitelist
 
 router.beforeEach(async (to, from, next) => {
   // start progress bar
@@ -30,7 +30,6 @@ router.beforeEach(async (to, from, next) => {
       console.log(store.state.user.roles);
       // const hasRoles = store.getters.roles && store.getters.roles.length > 0
       const hasRoles = store.state.user.roles && store.state.user.roles.length > 0
-      console.log('hasRoles', hasRoles);
       if (hasRoles) {
         next()
       } else {

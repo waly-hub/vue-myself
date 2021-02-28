@@ -1,8 +1,5 @@
 <template>
-  <a-layout
-    id="components-layout-demo-responsive"
-    style="height: 100%"
-  >
+  <a-layout id="components-layout-demo-responsive" style="height: 100%">
     <a-layout-sider
       breakpoint="lg"
       collapsed-width="0"
@@ -13,39 +10,46 @@
       collapsible
     >
       <div class="logo" />
-      <a-menu
-        theme="dark"
-        mode="inline"
-      >
+      <a-menu theme="dark" mode="inline">
         <template v-for="item of per_routes">
           <template v-if="item.children && item.children.length === 1">
             <a-menu-item
               :key="item.path"
-              style="text-align: left;"
+              style="text-align: left"
               @click="navPage(item)"
               v-if="!item.hidden"
             >
-              <a-icon :type="item.children[0].meta.icon ? item.children[0].meta.icon : ''" />
-              <span class="nav-text">{{item.children[0].meta.title}}</span>
+              <a-icon
+                :type="
+                  item.children[0].meta.icon ? item.children[0].meta.icon : ''
+                "
+              />
+              <span class="nav-text">{{ item.children[0].meta.title }}</span>
             </a-menu-item>
           </template>
           <template v-else>
             <a-sub-menu
               :key="item.path"
-              style="text-align: left;"
+              style="text-align: left"
               v-if="!item.hidden"
             >
               <span slot="title">
                 <a-icon :type="item.meta.icon ? item.meta.icon : ''" />
-                <span>{{item.meta.title}}</span>
+                <span>{{ item.meta.title }}</span>
               </span>
               <template v-for="child of item.children">
+                <!-- <a-sub-menu :key="child.path" style="text-align: left" v-if="!child.hidden && item.children.length > 1">
+                  <span slot="title">
+                    <a-icon :type="item.meta.icon ? item.meta.icon : ''" />
+                    <span>{{ item.meta.title }}</span>
+                  </span>
+                </a-sub-menu> -->
                 <a-menu-item
                   :key="child.path"
-                  style="text-align: left;"
+                  style="text-align: left"
                   @click="navPage(child)"
                 >
-                  {{child.meta.title}}
+                  {{ child.meta.title }}
                 </a-menu-item>
               </template>
             </a-sub-menu>
@@ -54,11 +58,8 @@
       </a-menu>
     </a-layout-sider>
     <a-layout>
-      <a-layout-header style="background: #fff; padding: 0;">
-        <div
-          class="right-menu"
-          style="padding: 0 20px;float:left;"
-        >
+      <a-layout-header style="background: #fff; padding: 0">
+        <div class="right-menu" style="padding: 0 20px; float: left">
           <a-icon
             class="trigger"
             :type="collapsed ? 'menu-unfold' : 'menu-fold'"
@@ -72,9 +73,10 @@
           <div @click="logout">Log Out</div>
         </div>
       </a-layout-header>
+      <Tabs class="tabs"></Tabs>
       <a-layout-content :style="{ margin: '24px 16px 0' }">
         <div :style="{ padding: '24px', background: '#fff', height: '100%' }">
-          <router-view></router-view>
+          <AppMain />
         </div>
       </a-layout-content>
       <!-- <a-layout-footer style="textAlign: center">
@@ -87,6 +89,8 @@
 import router from "@/router";
 import { mapGetters } from "vuex";
 import Breadcrumb from "@/components/Breadcrumb";
+import Tabs from "@/components/Tabs";
+import AppMain from "@/components/AppMain";
 export default {
   data() {
     return {
@@ -96,6 +100,8 @@ export default {
   },
   components: {
     Breadcrumb,
+    Tabs,
+    AppMain,
   },
   computed: {
     // ...mapGetters({
@@ -117,13 +123,10 @@ export default {
       console.log(broken);
     },
     async logout() {
-      console.log(this.$route);
       await this.$store.dispatch("user/logout");
       this.$router.push(`/member/login?redirect=${this.$route.fullPath}`);
     },
     navPage(target) {
-      console.log(this.$route);
-      console.log(target);
       if (target.children) {
         if (target.children[0].meta.title === this.$route.meta.title) return;
         this.$router.push({
@@ -158,5 +161,11 @@ export default {
   float: right;
   margin-right: 8px;
   height: 100%;
+}
+.tabs {
+  text-align: left;
+  /deep/ .ant-tabs-nav-wrap {
+    margin-left: 20px;
+  }
 }
 </style>

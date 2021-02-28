@@ -60,30 +60,65 @@ export const asyncRoutes = [
     // component: () => import('@/layout/index.vue'),
     redirect: '/permission/page',
     name: 'Permission',
-    meta: { title: 'Permission', icon: 'lock', roles: [ 'admin', 'editor' ] },
+    meta: { title: 'Permission', icon: 'lock', roles: ['admin', 'editor'] },
     children: [
       {
         path: '/permission/page',
         name: 'Permission Page',
         component: () => import('@/views/permission/page'),
-        meta: { title: 'Permission Page', roles: [ 'admin', 'editor' ] },
+        meta: { title: 'Permission Page', roles: ['admin', 'editor'] },
       },
       {
         path: '/permission/directive',
         name: 'Permission Directive',
         component: () => import('@/views/permission/directive'),
-        meta: { title: 'Permission Directive', roles: [ 'admin', 'editor' ] },
+        meta: { title: 'Permission Directive', roles: ['admin', 'editor'] },
       },
       {
         path: '/permission/roles',
         name: 'Permission Roles',
         component: () => import('@/views/permission/roles'),
-        meta: { title: 'Permission Roles', roles: [ 'admin' ] },
+        meta: { title: 'Permission Roles', roles: ['admin'] },
+      }
+    ]
+  }, {
+    path: '/example',
+    component: Layout,
+    // component: () => import('@/layout/index.vue'),
+    redirect: '/example/tab',
+    name: 'Example',
+    meta: { title: 'Example', icon: 'lock', roles: ['admin', 'editor'] },
+    children: [
+      {
+        path: '/example/tab',
+        name: 'Example Tab',
+        component: () => import('@/views/example/tab'),
+        meta: { title: 'Example Tab', roles: ['admin', 'editor'] }
+      },
+      {
+        path: '/example/table',
+        redirect: '/example/table/dynamic',
+        component: () => import('@/views/example/table/index'),
+        name: 'Example Table',
+        meta: { title: 'Example Table', icon: 'lock', roles: ['admin', 'editor'] },
+        children: [
+          {
+            path: '/example/table/dynamic',
+            name: 'Example Table Dynamic',
+            component: () => import('@/views/example/table/dynamic'),
+            meta: { title: 'Example Table Dynamic', roles: ['admin', 'editor'] }
+          },
+          {
+            path: '/example/table/drag',
+            name: 'Example Table Drag',
+            component: () => import('@/views/example/table/drag'),
+            meta: { title: 'Example Table Drag', roles: ['admin', 'editor'] }
+          },
+        ]
       }
     ]
   }
 ]
-console.log('---', constantRoutes.concat(asyncRoutes));
 const createRoute = () => new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
