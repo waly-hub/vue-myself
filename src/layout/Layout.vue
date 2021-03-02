@@ -11,50 +11,12 @@
     >
       <div class="logo" />
       <a-menu theme="dark" mode="inline">
-        <template v-for="item of per_routes">
-          <template v-if="item.children && item.children.length === 1">
-            <a-menu-item
-              :key="item.path"
-              style="text-align: left"
-              @click="navPage(item)"
-              v-if="!item.hidden"
-            >
-              <a-icon
-                :type="
-                  item.children[0].meta.icon ? item.children[0].meta.icon : ''
-                "
-              />
-              <span class="nav-text">{{ item.children[0].meta.title }}</span>
-            </a-menu-item>
-          </template>
-          <template v-else>
-            <a-sub-menu
-              :key="item.path"
-              style="text-align: left"
-              v-if="!item.hidden"
-            >
-              <span slot="title">
-                <a-icon :type="item.meta.icon ? item.meta.icon : ''" />
-                <span>{{ item.meta.title }}</span>
-              </span>
-              <template v-for="child of item.children">
-                <!-- <a-sub-menu :key="child.path" style="text-align: left" v-if="!child.hidden && item.children.length > 1">
-                  <span slot="title">
-                    <a-icon :type="item.meta.icon ? item.meta.icon : ''" />
-                    <span>{{ item.meta.title }}</span>
-                  </span>
-                </a-sub-menu> -->
-                <a-menu-item
-                  :key="child.path"
-                  style="text-align: left"
-                  @click="navPage(child)"
-                >
-                  {{ child.meta.title }}
-                </a-menu-item>
-              </template>
-            </a-sub-menu>
-          </template>
-        </template>
+        <SidebarItem
+          v-for="route in per_routes"
+          :key="route.path"
+          :base-path="route.path"
+          :item="route"
+        ></SidebarItem>
       </a-menu>
     </a-layout-sider>
     <a-layout>
@@ -91,6 +53,8 @@ import { mapGetters } from "vuex";
 import Breadcrumb from "@/components/Breadcrumb";
 import Tabs from "@/components/Tabs";
 import AppMain from "@/components/AppMain";
+import path from "path";
+import SidebarItem from "./components/Sidebar/SidebarItem";
 export default {
   data() {
     return {
@@ -102,6 +66,7 @@ export default {
     Breadcrumb,
     Tabs,
     AppMain,
+    SidebarItem,
   },
   computed: {
     // ...mapGetters({
@@ -114,6 +79,7 @@ export default {
   created() {
     // this.routes = this.$store.state.permission.routes;
     console.log(this.$store.state.permission.routes);
+    console.log("-----", path.resolve("/aa", "index"));
   },
   methods: {
     onCollapse(collapsed, type) {
