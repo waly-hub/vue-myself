@@ -10,7 +10,7 @@
       collapsible
     >
       <div class="logo" />
-      <Menus />
+      <Menus :per_routes="per_routes" />
     </a-layout-sider>
     <a-layout>
       <a-layout-header style="background: #fff; padding: 0">
@@ -52,23 +52,6 @@ export default {
     return {
       // routes: "",
       collapsed: false,
-      list: [
-        {
-          key: "1",
-          title: "Option 1",
-        },
-        {
-          key: "2",
-          title: "Navigation 2",
-          children: [
-            {
-              key: "2.1",
-              title: "Navigation 3",
-              children: [{ key: "2.1.1", title: "Option 2.1.1" }],
-            },
-          ],
-        },
-      ],
     };
   },
   components: {
