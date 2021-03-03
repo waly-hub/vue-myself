@@ -47,7 +47,12 @@ export const constantRoutes = [
         meta: { title: 'TEST PAGE', icon: 'dashboard' }
       }
     ]
-  }
+  },
+  {
+    path: '*',
+    hidden: true,
+    component: () => import('@/views/404/404.vue')
+  },
 
 ]
 // addRoutes 新增的路由

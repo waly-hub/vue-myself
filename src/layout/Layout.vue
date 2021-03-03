@@ -22,13 +22,13 @@
           />
         </div>
         <div class="breadcrumb">
-          <Breadcrumb></Breadcrumb>
+          <Breadcrumb />
         </div>
         <div class="right-menu">
           <div @click="logout">Log Out</div>
         </div>
       </a-layout-header>
-      <Tabs class="tabs"></Tabs>
+      <Tabs class="tabs" />
       <a-layout-content :style="{ margin: '24px 16px 0' }">
         <div :style="{ padding: '24px', background: '#fff', height: '100%' }">
           <AppMain />
