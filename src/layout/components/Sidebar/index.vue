@@ -5,8 +5,8 @@
       theme="dark"
       :inlineCollapsed="collapsed"
       style="text-align: left"
-      :selectedKeys="activeMenu"
       :open-keys="openKeys"
+      :selectedKeys="activeMenu"
       @openChange="onOpenChange"
     >
       <template v-for="item in per_routes">
@@ -33,7 +33,7 @@ export default {
   data() {
     return {
       collapsed: false,
-      openKeys: [],
+      openKeys: ["xx"],
     };
   },
   computed: {
@@ -54,7 +54,7 @@ export default {
     SubMenu,
   },
   mounted() {
-    console.log(this.per_routes);
+    console.log("this.per_routes", this.per_routes);
   },
   methods: {
     toggleCollapsed() {
@@ -69,21 +69,25 @@ export default {
       });
     },
     onOpenChange(openKeys) {
-      console.log("openKeys", openKeys);
+      console.log(openKeys);
       const latestOpenKey = openKeys.find((key) => {
-        console.log("key", key);
-        this.openKeys.indexOf(key) === -1;
+        return this.openKeys.indexOf(key) === -1;
       });
       console.log("latestOpenKey", latestOpenKey);
-      // if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-      //   this.openKeys = openKeys;
-      // } else {
-      //   this.openKeys = latestOpenKey ? [latestOpenKey] : [];
-      // }
+      const subMenus = this.per_routes.filter((item) => {
+        return !item.hidden && item.children.length > 1;
+      });
+      const rootSubmenuKeys = [];
+      subMenus.forEach((item) => {
+        rootSubmenuKeys.push(item.path);
+      });
+      if (rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+        this.openKeys = openKeys;
+        console.log("------", this.openKeys);
+      } else {
+        this.openKeys = latestOpenKey ? [latestOpenKey] : [];
+      }
     },
   },
 };
 </script>
-
-
-
